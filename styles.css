@@ -1,0 +1,571 @@
+/* Global reset */
+* {
+  box-sizing: border-box;
+}
+
+/* Theme variables */
+:root {
+  --bg: #161b22;
+  --panel: #1f2732;
+  --panel-alt: #232d39;
+  --text: #f5f7fb;
+  --text-muted: #adbac7;
+  --accent: #7d5fff;
+  --accent-soft: rgba(125, 95, 255, 0.15);
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.18);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top left, #2f3650 0%, #161b22 40%);
+  color: var(--text);
+}
+
+.app-shell {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+/* Header layout */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.tabs-control {
+  display: flex;
+  gap: 10px;
+}
+
+.primary-btn,
+.secondary-btn {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  padding: 12px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover {
+  background: rgba(125, 95, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.secondary-btn {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.header-title h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+}
+
+.tab-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tab-menu.hidden {
+  display: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.tab-button {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-align: left;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+.tab-button.active {
+  background: rgba(125, 95, 255, 0.16);
+  border-color: rgba(125, 95, 255, 0.45);
+}
+
+.tab-button:hover {
+  transform: translateY(-1px);
+}
+
+.tab-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Tab delete button */
+.tab-delete {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 1rem;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+}
+
+.tab-delete:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* Item card details */
+.item-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.command-help code {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 0.9rem;
+}
+
+.app-content {
+  display: grid;
+  gap: 16px;
+}
+
+.inventory-panel,
+.item-library {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) minmax(120px, 180px) minmax(120px, 180px) minmax(180px, 220px);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.labelled-field.stretch {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+}
+
+.labelled-field label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.labelled-field input,
+.labelled-field textarea,
+#item-name,
+#item-image-file,
+#portrait-file,
+#tab-money,
+#tab-health {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  padding: 14px;
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.labelled-field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.health-display {
+  display: grid;
+  gap: 8px;
+}
+
+.health-bar {
+  width: 100%;
+  height: 18px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.health-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: #0aee15;
+  box-shadow: 0 0 16px rgba(10, 238, 21, 0.45);
+  transition: width 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.health-text {
+  text-align: center;
+  font-weight: 700;
+  color: #f5f7fb;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.labelled-field.stretch {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-row {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 16px;
+}
+
+.portrait-panel,
+.inventory-grid-panel {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 16px;
+}
+
+.portrait-header,
+.inventory-header,
+.library-header h2 {
+  margin: 0 0 12px;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+.portrait-placeholder {
+  position: relative;
+  min-height: 240px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-muted);
+  padding: 16px;
+  margin-bottom: 12px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.status-effects {
+  margin-top: 12px;
+}
+
+.status-effects label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.status-effect {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.status-effect img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.portrait-money-badge {
+  position: relative;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: url('https://i.ibb.co/n8LnRyGf/pngtree-gold-dollar-coin-png-image-3975554-removebg-preview.png') center center / contain no-repeat;
+  border-radius: 999px;
+  color: #000000;
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 1;
+  font-size: 60px;
+  width: 80px;
+  height: 80px;
+  white-space: nowrap;
+}
+
+.portrait-money-badge strong {
+  font-size: 30px;
+  line-height: 1;
+  color: #000000;
+  text-shadow: -1px -1px 0 #ffffff, 1px -1px 0 #ffffff, -1px 1px 0 #ffffff, 1px 1px 0 #ffffff;
+}
+
+.money-display-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.money-display-field > label {
+  margin-bottom: 8px;
+}
+
+.portrait-panel input[type="file"] {
+  width: 100%;
+  margin-top: 8px;
+  color: #f5f7fb;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.grid-cell {
+  aspect-ratio: 1 / 1;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  position: relative;
+  cursor: grab;
+  transition: all 150ms ease;
+  overflow: hidden;
+}
+
+.grid-cell[style*="background-image"] {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: grab;
+}
+
+.grid-cell:hover {
+  border-color: rgba(125, 95, 255, 0.5);
+  box-shadow: inset 0 0 12px rgba(125, 95, 255, 0.1);
+}
+
+.grid-cell:active {
+  cursor: grabbing;
+}
+
+.grid-cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.item-library.hidden {
+  display: none;
+}
+
+.inventory-panel.hidden {
+  display: none;
+}
+
+.library-header {
+  margin-bottom: 16px;
+}
+
+.item-form {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr auto minmax(180px, 220px);
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.item-form.drag-over {
+  border-color: rgba(125, 95, 255, 0.6);
+  background: rgba(125, 95, 255, 0.08);
+}
+
+.toggle-field {
+  color: var(--text);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-field input {
+  width: auto;
+}
+
+.item-list {
+  display: grid;
+  gap: 12px;
+}
+
+.item-card {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  align-items: center;
+}
+
+.item-card.drag-over {
+  border-color: rgba(125, 95, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.item-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.item-delete-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: var(--text);
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.item-delete-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.item-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.item-card .item-label {
+  display: flex;
+  align-items: center;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.command-footer {
+  margin-top: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 18px;
+}
+
+.command-box {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.command-help {
+  margin-top: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 14px;
+  color: var(--text);
+}
+
+.command-help ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+.command-help li {
+  margin-bottom: 6px;
+}
+
+.command-output {
+  margin-top: 14px;
+  color: var(--text-muted);
+  min-height: 20px;
+}
+
+@media (max-width: 900px) {
+  .field-row,
+  .content-row,
+  .item-form {
+    grid-template-columns: 1fr;
+  }
+
+  .app-header {
+    flex-wrap: wrap;
+  }
+}
+
+.item-menu {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 8px;
+  box-shadow: var(--shadow);
+  display: flex;
+  gap: 8px;
+}
+
+.item-menu.hidden {
+  display: none;
+}
+
+.item-menu button {
+  background: var(--accent);
+  color: var(--text);
+  border: none;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-menu button:hover {
+  background: rgba(125, 95, 255, 0.85);
+}

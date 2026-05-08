@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory Manager</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- App shell wrapper -->
+  <div class="app-shell">
+    <!-- Header: tab controls, title, and library toggle -->
+    <header class="app-header">
+      <div class="tabs-control">
+        <button id="toggle-tab-menu" class="primary-btn">Characters ▾</button>
+        <button id="add-tab" class="secondary-btn">+ New Character</button>
+      </div>
+      <div class="header-title">
+        <h1>Inventory Manager</h1>
+      </div>
+      <button id="library-button-header" class="secondary-btn">Item Library</button>
+    </header>
+
+    <!-- Tab menu: dynamically rendered inventory tabs -->
+    <nav id="tab-menu" class="tab-menu"></nav>
+
+    <main class="app-content">
+      <!-- Inventory panel: active tab details and grid -->
+      <section class="inventory-panel" id="testing">
+        <div class="field-row">
+          <div class="labelled-field">
+            <label for="tab-name">Character Name</label>
+            <input id="tab-name" type="text" placeholder="Enter character name" />
+          </div>
+          <div class="labelled-field">
+            <label>Health</label>
+            <div class="health-display">
+              <div class="health-bar" id="health-bar">
+                <div class="health-bar-fill" id="health-fill"></div>
+              </div>
+              <div class="health-text" id="health-text">100/100</div>
+            </div>
+            <input id="tab-health" type="number" readonly hidden />
+          </div>
+          <div class="portrait-money-badge" id="portrait-money-badge">
+            <span></span><strong>0</strong>
+          </div>
+        </div>
+        <div class="labelled-field stretch">
+            <label for="tab-description">Description</label>
+            <textarea id="tab-description" placeholder="Enter a description for this tab"></textarea>
+          </div>
+        </div>
+
+        <div class="content-row" id="inventory-panel">
+          <div class="portrait-panel">
+            <div class="portrait-header">Character Image</div>
+            <div class="portrait-placeholder" id="portrait-placeholder">
+              Click to select an image
+            </div>
+
+            <input id="portrait-file" type="file" accept="image/*" style="display: none;" />
+            <div class="status-effects">
+              <label>Status Effects</label>
+              <div id="status-effects-list"></div>
+            </div>
+          </div>
+
+          <div class="inventory-grid-panel">
+            <div class="inventory-header">Inventory</div>
+            <div class="inventory-grid" id="inventory-grid"></div>
+            <div class="item-menu hidden" id="item-menu">
+              <button id="item-add-btn">＋</button>
+              <button id="item-remove-btn">－</button>
+              <button id="item-delete-btn">🗑️</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Item Library panel: library items and creation form -->
+      <section class="item-library hidden" id="item-library">
+        <div class="library-header">
+          <h2>Item Library</h2>
+          <p>Add items to the library</p>
+        </div>
+        <div class="item-form" id="item-form">
+          <input id="item-name" type="text" placeholder="Item name" />
+          <input id="item-image-file" type="file" accept="image/*" />
+          <button id="add-item" class="primary-btn">Add Item</button>
+          <label class="toggle-field">
+            <input id="auto-add-image" type="checkbox" />
+            Auto-add image items
+          </label>
+        </div>
+        <div class="item-list" id="item-list"></div>
+      </section>
+    </main>
+
+    <!-- Command footer: command input and help output -->
+    <footer class="command-footer">
+      <div class="command-box">
+        <input id="command-input" type="text" placeholder="Type a command, commands include add, use, damage, heal, money" />
+        <button id="run-command" class="primary-btn">Run</button>
+        <button id="show-commands-btn" class="secondary-btn">Show Commands</button>
+      </div>
+      <div id="command-output" class="command-output">Entered commands will appear here.</div>
+      <div id="command-help" class="command-help hidden">
+        <strong>Available commands:</strong>
+        <ul>
+          <li><code>add item name</code> or <code>add item name 5</code></li>
+          <li><code>use item name</code></li>
+          <li><code>damage number</code></li>
+          <li><code>heal number</code></li>
+          <li><code>health max number</code></li>
+          <li><code>health number</code></li>
+          <li><code>money +10</code> or <code>money -5</code></li>
+          <li><code>status Poison image potion</code> or <code>status Healing</code> or <code>status remove Healing</code></li>
+
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
